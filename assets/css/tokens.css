@@ -1,0 +1,133 @@
+/* ============================================================
+   PHAROS CONSULTORIA — DESIGN TOKENS
+   Fonte de verdade do sistema visual. Derivado do Manual da Marca.
+   ============================================================ */
+
+/* ---------- FONTES (Open Sauce Sans, auto-hospedada, OFL) ---------- */
+@font-face { font-family: "Open Sauce Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/open-sauce-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: italic; font-weight: 400; font-display: swap; src: url("../fonts/open-sauce-sans-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url("../fonts/open-sauce-sans-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: italic; font-weight: 500; font-display: swap; src: url("../fonts/open-sauce-sans-latin-500-italic.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("../fonts/open-sauce-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: italic; font-weight: 600; font-display: swap; src: url("../fonts/open-sauce-sans-latin-600-italic.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: normal; font-weight: 700; font-display: swap; src: url("../fonts/open-sauce-sans-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Open Sauce Sans"; font-style: italic; font-weight: 700; font-display: swap; src: url("../fonts/open-sauce-sans-latin-700-italic.woff2") format("woff2"); }
+
+/* Titulos: Noto Serif Display (variavel: peso 100-900 + largura 62.5-100%).
+   Aqui fica como fallback e como italico verdadeiro (a Times MT Condensed nao tem italico). */
+@font-face { font-family: "Noto Serif Display"; font-style: normal; font-weight: 100 900; font-stretch: 62.5% 100%; font-display: swap; src: url("../fonts/noto-serif-display-latin-standard-normal.woff2") format("woff2"); }
+@font-face { font-family: "Noto Serif Display"; font-style: italic; font-weight: 100 900; font-stretch: 62.5% 100%; font-display: swap; src: url("../fonts/noto-serif-display-latin-standard-italic.woff2") format("woff2"); }
+
+/* Fontes reais da marca (fornecidas pelo Leandro, 16/07/2026).
+   Peso declarado 100-900: a fonte so tem regular, e assim o browser usa o
+   desenho original em qualquer peso, sem engrossar artificialmente (faux bold). */
+@font-face { font-family: "Times New Roman MT Condensed"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("../fonts/times-mt-condensed-regular.woff2") format("woff2"); }
+@font-face { font-family: "Belleza"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("../fonts/belleza-regular.woff2") format("woff2"); }
+
+:root {
+  /* ---------- CORES DE MARCA ---------- */
+  --green-900: #061f16;   /* verde mais profundo (fundos hero) */
+  --green-800: #082e21;   /* verde principal da marca */
+  --green-700: #0f3b2d;   /* verde escuro secundário */
+  --green-600: #14503a;
+  --green-500: #1b6a4d;   /* verde médio (detalhes) */
+  --green-400: #2f8564;
+
+  --gold-700: #8a5f27;
+  --gold-600: #ae7832;    /* dourado escuro */
+  --gold-500: #dfa446;    /* dourado principal / CTA */
+  --gold-400: #e9b968;
+  --gold-300: #ffd146;    /* ouro claro / brilho */
+
+  --paper:    #f6f4ee;    /* off-white quente (seções claras) */
+  --paper-2:  #efece2;    /* cartões em fundo claro */
+  --ink:      #111111;    /* preto de texto */
+  --ink-soft: #2b2b2b;
+
+  /* ---------- TOKENS SEMÂNTICOS (claro) ---------- */
+  --bg:            var(--paper);
+  --bg-alt:        #fbfaf6;
+  --surface:       #ffffff;
+  --surface-2:     var(--paper-2);
+  --text:          #1a1a1a;
+  --text-muted:    #55524b;
+  --text-subtle:   #7a766c;
+  --border:        #e2ded1;
+  --border-strong: #cfc9b8;
+  --accent:        var(--gold-600);   /* dourado com contraste AA em texto */
+  --accent-bright: var(--gold-500);
+  --brand:         var(--green-800);
+  --brand-deep:    var(--green-900);
+
+  /* Foco / estados */
+  --ring: var(--gold-500);
+
+  /* ---------- TIPOGRAFIA ---------- */
+  /* Fontes reais da marca nesta versao: Times MT Condensed nos titulos,
+     Belleza exclusiva do wordmark PHAROS (header e footer). */
+  --font-display:  "Times New Roman MT Condensed", "Noto Serif Display", "Times New Roman", Times, serif;
+  --font-wordmark: "Belleza", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --font-brand:    Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --font-body:     "Open Sauce Sans", Arial, "Helvetica Neue", sans-serif;
+
+  /* Escala fluida */
+  --fs-display: clamp(2.9rem, 6.2vw, 5.75rem);
+  --fs-h1:      clamp(2.25rem, 4.6vw, 4rem);
+  --fs-h2:      clamp(1.95rem, 3.4vw, 3rem);
+  --fs-h3:      clamp(1.4rem, 2.1vw, 1.9rem);
+  --fs-h4:      clamp(1.15rem, 1.5vw, 1.4rem);
+  --fs-lead:    clamp(1.1rem, 1.55vw, 1.35rem);
+  --fs-body:    1.0625rem;
+  --fs-sm:      0.9375rem;
+  --fs-eyebrow: 0.8125rem;
+
+  --lh-tight:   1.08;
+  --lh-snug:    1.25;
+  --lh-body:    1.7;
+
+  --ls-eyebrow: 0.22em;
+  --ls-tight:   -0.02em;
+
+  /* ---------- ESPAÇAMENTO (base 4px) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  --section-y: clamp(4.5rem, 9vw, 9rem);
+  --container:  1240px;
+  --container-narrow: 820px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* ---------- RAIO / SOMBRAS ---------- */
+  /* Cantos retos: estilo editorial, institucional. Decisão do projeto. */
+  --radius-sm: 0;
+  --radius:    0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+
+  --shadow-sm: 0 1px 2px rgba(6, 31, 22, 0.06), 0 2px 8px rgba(6, 31, 22, 0.04);
+  --shadow:    0 8px 30px rgba(6, 31, 22, 0.08), 0 2px 8px rgba(6, 31, 22, 0.05);
+  --shadow-lg: 0 24px 60px rgba(6, 31, 22, 0.14), 0 6px 18px rgba(6, 31, 22, 0.08);
+  --shadow-gold: 0 12px 34px rgba(174, 120, 50, 0.28);
+
+  /* ---------- MOVIMENTO ---------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 160ms;
+  --dur: 260ms;
+  --dur-slow: 520ms;
+
+  /* ---------- CAMADAS ---------- */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+}
