@@ -1,0 +1,36 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+._*
+
+# Editores
+.vscode/
+.idea/
+
+# Dependências
+node_modules/
+
+# Temporários
+*.log
+*.tmp
+
+# ─────────────────────────────────────────────────────────────
+# Mídia pesada e material-fonte: vivem no Drive, NÃO no git.
+# As imagens que o site USA (assets/) ficam versionadas de
+# propósito, pra o site ser 100% restaurável do git.
+# ─────────────────────────────────────────────────────────────
+*.mp4
+*.mov
+*.MOV
+*.avi
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.m4a
+*.zip
+*.psd
+*.ai
+*.pdf
+*.docx
+*.pptx
