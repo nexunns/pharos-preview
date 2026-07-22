@@ -19,7 +19,10 @@
   transform: translate(50%, -50%);
   opacity: 0.8;
 }
-@media (max-width: 760px) { .page-hero::after { opacity: 0.4; width: 82vw; } }
+/* Em coluna unica o texto passa por cima do emblema: ele vira marca d'agua.
+   Sem isso, em tablet (820px) o farol competia com o titulo e com o botao do menu. */
+@media (max-width: 1024px) { .page-hero::after { opacity: 0.3; } }
+@media (max-width: 760px)  { .page-hero::after { opacity: 0.22; width: 82vw; } }
 .page-hero .container { position: relative; z-index: 1; }
 .page-hero h1 { color: #f1f1f1; font-size: var(--fs-h1); max-width: 18ch; margin-block: var(--space-4) var(--space-4); }
 .page-hero .lead { color: #c9cdc2; max-width: 60ch; }
@@ -104,6 +107,10 @@
 
 /* ---------- CONTATO ---------- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem,5vw,4rem); align-items: start; }
+/* itens de grid nao encolhem abaixo do min-content por padrao: sem isso o
+   e-mail (palavra unica e longa) esticava a coluna alem da tela em 320px */
+.contact-grid > *, .channel { min-width: 0; }
+.channel a, .channel p { overflow-wrap: anywhere; }
 .contact-info .eyebrow { margin-bottom: var(--space-4); }
 .contact-channels { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
 .channel { display: flex; gap: var(--space-4); align-items: flex-start; padding: var(--space-5); border: 1px solid var(--border); background: var(--surface); transition: border-color var(--dur) var(--ease); }

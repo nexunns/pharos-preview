@@ -38,13 +38,13 @@
         </nav>
         <div class="footer-col footer-news">
           <h5>Newsletter</h5>
-          <p>Receba conteúdos de gestão e estratégia no seu e-mail.</p>
+          <p>Receba conteúdos de gestão e estratégia no seu&nbsp;e-mail.</p>
           <form class="news-form" data-mock aria-label="Assinar newsletter">
             <label class="sr-only" for="nl-email">Seu e-mail</label>
             <input id="nl-email" type="email" name="email" placeholder="Seu melhor e-mail" required autocomplete="email" />
             <button type="submit" aria-label="Assinar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           </form>
-          <p data-form-note hidden style="color:var(--gold-400); margin-top:var(--space-3)"></p>
+          <p data-form-note hidden style="color:var(--gold-400); margin-top:var(--space-3)">Pronto. Você vai receber nossos próximos conteúdos.</p>
         </div>
       </div>
       <div class="footer-bottom">
@@ -151,7 +151,10 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const btn = form.querySelector("[type=submit]");
-      const note = form.querySelector("[data-form-note]");
+      // no rodape o aviso vive fora do <form> (irmao), entao procura tambem no pai
+      const note =
+        form.querySelector("[data-form-note]") ||
+        (form.parentElement && form.parentElement.querySelector("[data-form-note]"));
       if (btn) { btn.disabled = true; }
       if (note) {
         if (!note.textContent.trim()) note.textContent = "Recebido. Em breve entramos em contato.";

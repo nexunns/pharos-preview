@@ -17,6 +17,8 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* rede de seguranca contra palavras indivisiveis (e-mails, URLs) em telas estreitas */
+  overflow-wrap: break-word;
   /* Condensa a largura APENAS da serifada variavel dos titulos (Noto Serif Display).
      Fontes sem eixo de largura (Open Sauce, Arial) ignoram e ficam normais. */
   font-stretch: 84%;
@@ -41,7 +43,12 @@ h1, h2, h3, h4 {
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   color: var(--text);
+  /* distribui as linhas do titulo em vez de deixar uma palavra sozinha embaixo */
+  text-wrap: balance;
 }
+h5, blockquote, .testi__quote, .case-card blockquote { text-wrap: balance; }
+/* evita a viuva (palavra solitaria na ultima linha) em texto corrido */
+p, li, .lead, figcaption, dd { text-wrap: pretty; }
 h1 { font-size: var(--fs-h1); }
 h2 { font-size: var(--fs-h2); }
 h3 { font-size: var(--fs-h3); line-height: var(--lh-snug); }
@@ -112,9 +119,12 @@ strong { font-weight: 600; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;      /* a seta nunca cai sozinha na linha de baixo */
   gap: 0.6em;
   padding: 0.95em 1.6em;
   min-height: 48px;
+  text-align: center;
+  max-width: 100%;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: var(--fs-sm);
@@ -126,7 +136,7 @@ strong { font-weight: 600; }
   transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
   will-change: transform;
 }
-.btn svg { width: 18px; height: 18px; transition: transform var(--dur) var(--ease); }
+.btn svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform var(--dur) var(--ease); }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
 .btn:hover svg { transform: translateX(3px); }
 .btn:active { transform: translateY(0); }
@@ -150,7 +160,7 @@ strong { font-weight: 600; }
   color: var(--accent);
   letter-spacing: 0.01em;
 }
-.link-arrow svg { width: 16px; height: 16px; transition: transform var(--dur) var(--ease); }
+.link-arrow svg { width: 16px; height: 16px; flex-shrink: 0; transition: transform var(--dur) var(--ease); }
 .link-arrow:hover svg { transform: translateX(4px); }
 
 /* ---------- HEADER ---------- */
@@ -265,6 +275,21 @@ strong { font-weight: 600; }
 body.menu-open .nav-toggle span { background: transparent; }
 body.menu-open .nav-toggle span::before { top: 0; transform: rotate(45deg); }
 body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
+/* Com o menu aberto o fundo e sempre o painel verde: barra transparente e
+   X claro, mesmo que a pagina esteja rolada (is-scrolled). */
+body.menu-open .site-header,
+body.menu-open .site-header.is-scrolled {
+  background: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-bottom-color: transparent; box-shadow: none;
+}
+body.menu-open .brand__name,
+body.menu-open .site-header.is-scrolled .brand__name { color: #f1f1f1; }
+body.menu-open .nav-toggle span::before,
+body.menu-open .nav-toggle span::after { background: #f1f1f1; }
+/* trava a pagina atras do painel */
+body.menu-open { overflow: hidden; }
+/* o WhatsApp flutuante (mesma camada) aparecia por cima do menu */
+body.menu-open .wa-float { opacity: 0; pointer-events: none; }
 
 /* ---------- HERO ---------- */
 .hero {
@@ -557,7 +582,7 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
   position: fixed; right: 22px; bottom: 22px; z-index: var(--z-overlay);
   width: 58px; height: 58px; border-radius: 50%; background: #25d366; color: #f1f1f1;
   display: grid; place-items: center; box-shadow: 0 10px 30px rgba(37,211,102,0.4);
-  transition: transform var(--dur) var(--ease);
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
 }
 .wa-float:hover { transform: scale(1.08); }
 .wa-float svg { width: 30px; height: 30px; }
@@ -601,16 +626,30 @@ body.menu-open .nav-toggle span::after { top: 0; transform: rotate(-45deg); }
 @media (max-width: 960px) {
   .nav, .header-actions .btn { display: none; }
   .nav-toggle { display: flex; }
-  /* Painel mobile */
+  /* Painel mobile.
+     justify-content: center estourava o painel em telas baixas (360x740: o
+     primeiro link ficava fora da tela e sem rolagem). Agora o conteudo comeca
+     abaixo do cabecalho e rola quando nao couber. */
   .nav.is-mobile {
     display: flex; position: fixed; inset: 0; z-index: var(--z-overlay);
-    flex-direction: column; align-items: flex-start; justify-content: center;
-    gap: var(--space-5); padding: var(--gutter);
+    flex-direction: column; align-items: flex-start; justify-content: flex-start;
+    gap: var(--space-4);
+    padding: calc(80px + var(--space-5)) var(--gutter) calc(var(--space-8) + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     background: url("../img/bg-verde.webp") center / cover no-repeat, var(--brand-deep);
     transform: translateX(100%); transition: transform var(--dur-slow) var(--ease);
   }
   body.menu-open .nav.is-mobile { transform: none; }
-  .nav.is-mobile .nav__link { font-family: var(--font-display); font-size: 1.8rem; color: #f1f1f1; }
+  /* O painel e filho do header, entao z-index 200 cobria o botao de fechar
+     (que tinha z-index 2): sem isso o X nao fechava o menu no celular. */
+  .nav-toggle, .brand { position: relative; z-index: calc(var(--z-overlay) + 1); }
+  /* compacta o submenu de Solucoes para caber mais itens na primeira tela */
+  .nav.is-mobile .menu-panel { display: grid; gap: 0; }
+  .nav.is-mobile .menu-panel a { padding: 0.42em 0; font-size: 1rem; }
+  .nav.is-mobile .menu-panel a small { display: none; }
+  .nav.is-mobile .nav__link { font-family: var(--font-display); font-size: clamp(1.5rem, 7vw, 1.9rem); color: #f1f1f1; }
   .nav.is-mobile .menu-panel { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; background: transparent; border: none; padding: 0; min-width: 0; }
   .nav.is-mobile .menu-panel a { color: #b9beb4; padding-left: 0; }
   .nav.is-mobile .btn { display: inline-flex; margin-top: var(--space-4); }
